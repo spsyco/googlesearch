@@ -1,6 +1,21 @@
 from bs4 import BeautifulSoup
 from requests import get
 
+def gather_proxy():
+    proxies = []
+    link_list = ['https://raw.githubusercontent.com/clarketm/proxy-list/master/proxy-list-raw.txt',
+                 'https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt',
+                 'https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks4.txt',
+                 'https://raw.githubusercontent.com/TheSpeedX/SOCKS-List/master/socks5.txt',
+                 'https://raw.githubusercontent.com/ShiftyTR/Proxy-List/master/proxy.txt',
+                 'https://raw.githubusercontent.com/sunny9577/proxy-scraper/master/proxies.txt']
+
+    for link in link_list:
+        response = requests.get(link)
+        output = response.content.decode()
+        proxy = output.split('\n')
+        proxies = proxies + proxy
+    return proxies
 
 def search(term, num_results=10, lang="en", proxy=None):
     usr_agent = {
